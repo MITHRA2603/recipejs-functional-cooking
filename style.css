@@ -1,61 +1,96 @@
 
-/* Controls Section */
-.controls {
-    background: white;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.controls h2 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.button-group {
+/* Recipe action buttons */
+.recipe-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 10px;
+    margin: 16px 0;
 }
 
-.button-group:last-child {
-    margin-bottom: 0;
-}
-
-.button-group button {
-    padding: 0.65rem 1rem;
-    border: 2px solid #667eea;
+.toggle-btn {
+    padding: 10px 14px;
+    border: none;
     border-radius: 8px;
-    background: white;
-    color: #667eea;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.button-group button:hover {
-    background: #eef0ff;
-}
-
-.button-group button.active {
-    background: #667eea;
+    background: #2563eb;
     color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
 }
 
-.button-group button:focus-visible {
-    outline: 3px solid #764ba2;
-    outline-offset: 3px;
+.toggle-btn:hover {
+    background: #1d4ed8;
 }
 
-@media (max-width: 600px) {
-    .controls {
-        padding: 1rem;
+/* Expandable sections */
+.expandable-section {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+/* Ensure hidden sections stay hidden */
+.expandable-section[hidden] {
+    display: none !important;
+}
+
+.expandable-section.visible {
+    display: block;
+}
+
+.expandable-section h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1e293b;
+}
+
+/* Ingredients */
+.ingredients-list {
+    padding-left: 22px;
+    line-height: 1.8;
+}
+
+.ingredients-list li {
+    margin-bottom: 4px;
+}
+
+/* Cooking steps */
+.steps-list {
+    padding-left: 25px;
+    line-height: 1.8;
+}
+
+.steps-list li {
+    margin-bottom: 8px;
+}
+
+.steps-list.level-1 {
+    margin-top: 8px;
+    padding-left: 24px;
+    list-style-type: disc;
+    border-left: 2px solid #cbd5e1;
+}
+
+.steps-list.level-2 {
+    margin-top: 6px;
+    padding-left: 24px;
+    list-style-type: circle;
+    border-left: 2px solid #93c5fd;
+}
+
+/* Recipe action buttons on small screens */
+@media (max-width: 480px) {
+    .recipe-actions {
+        flex-direction: column;
     }
 
-    .button-group button {
-        font-size: 0.85rem;
+    .toggle-btn {
+        width: 100%;
+    }
+
+    .expandable-section {
+        padding: 10px;
     }
 }
