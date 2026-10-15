@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeJS - Cooking Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <h1>🍳 RecipeJS</h1>
+        <p>Your Functional Cooking Companion</p>
+
+        <div class="search-wrapper">
+            <input
+                type="search"
+                id="search-input"
+                placeholder="Search recipes or ingredients..."
+                aria-label="Search recipes or ingredients"
+            >
+            <button id="clear-search" type="button" hidden>Clear</button>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <h2>Explore Recipes</h2>
+
+        <div class="filter-controls">
+            <button data-filter="all" class="active">All</button>
+            <button data-filter="easy">Easy</button>
+            <button data-filter="medium">Medium</button>
+            <button data-filter="hard">Hard</button>
+            <button data-filter="quick">Quick</button>
+            <button data-filter="favorites">♥ Favorites Only</button>
+        </div>
+
+        <div class="sort-controls">
+            <span>Sort by:</span>
+            <button data-sort="none" class="active">Default</button>
+            <button data-sort="name">Name</button>
+            <button data-sort="time">Cooking Time</button>
+        </div>
+
+        <p id="recipe-counter" aria-live="polite">Showing 8 of 8 recipes</p>
+
+        <div id="recipe-container" class="recipe-grid"></div>
+    </main>
+
+    <footer class="app-footer">
+        <p>Made with ❤️ using JavaScript</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
