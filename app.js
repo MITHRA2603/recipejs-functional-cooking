@@ -1,6 +1,6 @@
 
+/* STEP 1: Recipe Data */
 
-/* Step 1: Recipe Data */
 const recipes = [
     {
         id: 1,
@@ -68,12 +68,80 @@ const recipes = [
     }
 ];
 
-/* Step 2: Select the Recipe Container */
-const recipeContainer = document.querySelector('#recipe-container');
 
-console.log(recipeContainer);
+/* STEP 2: State Management */
 
-/* Step 3: Create a Recipe Card */
+let currentFilter = "all";
+let currentSort = "none";
+
+
+/* STEP 3: DOM References */
+
+const recipeContainer = document.querySelector("#recipe-container");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const sortButtons = document.querySelectorAll(".sort-btn");
+
+
+/* STEP 4: Pure Filter Functions */
+
+const filterByDifficulty = (recipes, difficulty) => {
+    return recipes.filter(recipe => recipe.difficulty === difficulty);
+};
+
+const filterByTime = (recipes, maxTime) => {
+    return recipes.filter(recipe => recipe.time < maxTime);
+};
+
+const applyFilter = (recipes, filterType) => {
+    switch (filterType) {
+        case "easy":
+            return filterByDifficulty(recipes, "easy");
+
+        case "medium":
+            return filterByDifficulty(recipes, "medium");
+
+        case "hard":
+            return filterByDifficulty(recipes, "hard");
+
+        case "quick":
+            return filterByTime(recipes, 30);
+
+        case "all":
+        default:
+            return [...recipes];
+    }
+};
+
+
+/* STEP 5: Pure Sort Functions */
+
+const sortByName = (recipes) => {
+    return [...recipes].sort((a, b) =>
+        a.title.localeCompare(b.title)
+    );
+};
+
+const sortByTime = (recipes) => {
+    return [...recipes].sort((a, b) => a.time - b.time);
+};
+
+const applySort = (recipes, sortType) => {
+    switch (sortType) {
+        case "name":
+            return sortByName(recipes);
+
+        case "time":
+            return sortByTime(recipes);
+
+        case "none":
+        default:
+            return [...recipes];
+    }
+};
+
+
+/* STEP 6: Create Recipe Card */
+
 const createRecipeCard = (recipe) => {
     return `
         <div class="recipe-card" data-id="${recipe.id}">
@@ -91,19 +159,71 @@ const createRecipeCard = (recipe) => {
     `;
 };
 
-console.log(createRecipeCard(recipes[0]));
 
-/* Step 4: Render All Recipes */
+/* STEP 7: Render Recipes */
+
 const renderRecipes = (recipesToRender) => {
-    const recipeCardsHTML = recipesToRender
+    recipeContainer.innerHTML = recipesToRender
         .map(createRecipeCard)
-        .join('');
-
-    recipeContainer.innerHTML = recipeCardsHTML;
+        .join("");
 };
 
-/* Step 5: Initialize the Application */
-renderRecipes(recipes);
 
-console.log('Total recipes:', recipes.length);
-console.log('Rendering complete!');
+/* STEP 8: Update Active Button States */
+
+const updateActiveButtons = () => {
+    filterButtons.forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.filter === currentFilter
+        );
+    });
+
+    sortButtons.forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.sort === currentSort
+        );
+    });
+};
+
+
+/* STEP 9: Update Display */
+
+const updateDisplay = () => {
+    let recipesToDisplay = applyFilter(recipes, currentFilter);
+
+    recipesToDisplay = applySort(recipesToDisplay, currentSort);
+
+    renderRecipes(recipesToDisplay);
+    updateActiveButtons();
+
+    console.log(
+        `Displaying ${recipesToDisplay.length} recipes (Filter: ${currentFilter}, Sort: ${currentSort})`
+    );
+};
+
+
+/* STEP 10: Event Listeners */
+
+const setupEventListeners = () => {
+    filterButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            currentFilter = button.dataset.filter;
+            updateDisplay();
+        });
+    });
+
+    sortButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            currentSort = button.dataset.sort;
+            updateDisplay();
+        });
+    });
+};
+
+
+/* STEP 11: Initialize Application */
+
+setupEventListeners();
+updateDisplay();
